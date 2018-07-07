@@ -683,11 +683,13 @@ class API
      * @return array with error message or array of market history
      * @throws \Exception
      */
-    public function aggTrades(string $symbol)
+    public function aggTrades(string $symbol, int $startTime = null)
     {
-        return $this->tradesData($this->httpRequest("v1/aggTrades", "GET", [
-            "symbol" => $symbol,
-        ]));
+        $params = ["symbol" => $symbol];
+        if($startTime) {
+            $params["startTime"]=$startTime
+        }
+        return $this->tradesData($this->httpRequest("v1/aggTrades", "GET", $parmas));
     }
 
     /**
@@ -1277,12 +1279,15 @@ class API
             $price = $trade['p'];
             $quantity = $trade['q'];
             $timestamp = $trade['T'];
-            $maker = $trade['m'] ? 'true' : 'false';
+            $maker = $trade['m'] ? 'buy' : 'sell';
             $output[] = [
+                "id" => $trade['a'],
                 "price" => $price,
                 "quantity" => $quantity,
+                "total" => $price * $quantity,
                 "timestamp" => $timestamp,
-                "maker" => $maker,
+                "type" => $maker,
+                "trade_count" => $trade['l'] - $trade['f'] + 1,
             ];
         }
         return $output;
