@@ -1057,7 +1057,7 @@ class API
       $params["startTime"] = $startTime;
     }
 
-    return $this->tradesData($this->httpRequest("v1/aggTrades", "GET", $parmas));
+    return $this->tradesData($this->httpRequest("v1/aggTrades", "GET", $params));
   }
 
   /**
