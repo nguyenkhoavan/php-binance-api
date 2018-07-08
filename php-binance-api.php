@@ -1045,16 +1045,21 @@ class API
    *
    * $trades = $api->aggTrades("BNBBTC");
    *
-   * @param $symbol string the symbol to get the trade information for
+   * @param $symbol    string the symbol to get the trade information for
+   * @param $startTime integer the startTime
+   * @param $endTime   integer the endTime
    *
    * @return array with error message or array of market history
    * @throws \Exception
    */
-  public function aggTrades(string $symbol, int $startTime = null)
+  public function aggTrades(string $symbol, int $startTime = null, int $endTime = null)
   {
     $params = ["symbol" => $symbol];
     if ($startTime) {
       $params["startTime"] = $startTime;
+    }
+    if ($endTime) {
+      $params["endTime"] = $endTime;
     }
 
     return $this->tradesData($this->httpRequest("v1/aggTrades", "GET", $params));
