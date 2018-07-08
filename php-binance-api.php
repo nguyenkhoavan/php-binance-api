@@ -1084,7 +1084,7 @@ class API
         "total"       => $price * $quantity,
         "timestamp"   => $timestamp,
         "type"        => $maker,
-        "trade_count" => $trade['l'] - $trade['f'] + 1,
+        "order_count" => $trade['l'] - $trade['f'] + 1,
       ];
     }
 
